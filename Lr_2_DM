@@ -1,0 +1,39 @@
+import numpy as np
+
+def find_eulerian_cycle(graph):
+
+    num_vertices = len(graph)
+    eulerian_cycle = []
+    stack = [0]
+
+    while stack:
+        u = stack[-1]
+        if any(graph[u]):
+            v = 0
+            while v < num_vertices and graph[u][v] == 0:
+                v += 1
+
+            eulerian_cycle.append((u, v))
+            graph[u][v] = 0
+            graph[v][u] = 0
+            stack.append(v)
+        else:
+            stack.pop()
+
+    return eulerian_cycle
+
+# задаємо матрицю прямо в коді
+graph = np.array([[0, 0, 0, 0, 86, 94, 51, 82],
+                  [0, 0, 81, 0, 20, 87, 0, 0],
+                  [0, 81, 0, 83, 41, 0, 0, 0],
+                  [0, 0, 83, 0, 8, 0, 0, 0],
+                  [86, 20, 41, 8, 0, 40, 0, 54],
+                  [94, 87, 0, 0, 40, 0, 89, 0],
+                  [51, 0, 0, 0, 0, 89, 0, 18],
+                  [82, 0, 0, 0, 54, 0, 18, 0]])
+
+eulerian_cycle = find_eulerian_cycle(graph)
+
+print("Ейлерів цикл:")
+for edge in eulerian_cycle:
+    print(f"{edge[0]} -> {edge[1]}")
